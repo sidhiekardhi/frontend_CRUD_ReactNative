@@ -1,0 +1,12 @@
+{
+  "name": "CRUD_Mahasiswa",
+  "displayName": "CRUD_Mahasiswa",
+  "expo": {
+    "name": "CRUD_Mahasiswa",
+    "slug": "CRUD_Mahasiswa",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
