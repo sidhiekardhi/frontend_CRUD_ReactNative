@@ -4,10 +4,18 @@ import { ScrollView, TextInput, TouchableHighlight, TouchableOpacity } from 'rea
 import { concat } from 'react-native-reanimated'
 import axios from 'axios'
 import qs from 'qs'
+import CardView from 'react-native-cardview'
+import { NavigationContainer } from '@react-navigation/native'
+import Routes from './routes'
 
 
 const Item = ({nama, alamat, jurusan, onPress, onDelete}) => {
     return (
+        <CardView
+        cardElevation={2}
+        cardMaxElevation={2}
+        cornerRadius={5}
+        margin={10}>
         <View style={styles.itemContainer}>
         <Image source=""></Image>
         <View style={styles.desc}>
@@ -22,6 +30,8 @@ const Item = ({nama, alamat, jurusan, onPress, onDelete}) => {
 
         </TouchableOpacity>
     </View>
+  </CardView>
+      
     )
 }
 
@@ -118,7 +128,10 @@ const Mahasiswa =() =>{
 
     
         return (
-            <ScrollView>
+            <NavigationContainer>
+                <Routes></Routes>
+            {/* <ScrollView>
+
             <View>
                 <Text style={{textAlign: 'center', margin: 10}}> Form Input Mahasiswa</Text>
                 <TextInput placeholder="Masukkan Id" style={{borderWidth: 1, marginBottom: 5}} value={id} onChangeText={(value) => setId(value)}></TextInput>
@@ -154,7 +167,8 @@ const Mahasiswa =() =>{
                 })}                    
                 </View>
             </View>
-            </ScrollView>
+            </ScrollView> */}
+            </NavigationContainer>
         )
     }
 export default Mahasiswa
