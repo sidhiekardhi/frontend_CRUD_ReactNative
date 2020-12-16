@@ -10,7 +10,7 @@ const FormTambah = ({nama, alamat, jurusan, onPress, onDelete}) => {
         cornerRadius={5}
         margin={10}>
         <View style={styles.itemContainer}>
-        <Image source=""></Image>
+        <Image></Image>
         <View style={styles.desc}>
             <TouchableOpacity onPress={onPress}>
             <Text style={{fontSize: 20, fontWeight: 'bold'}}>Nama Lengkap : {nama}</Text>
