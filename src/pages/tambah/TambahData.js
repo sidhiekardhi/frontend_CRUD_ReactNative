@@ -20,12 +20,26 @@ const Home = ({navigation}) => {
             navigation.navigate("List Data");
         }
         const simpan  =() => {
-            const data = {
-                nama,
-                alamat,
-                jurusan
-            }
-            axios.post("http://192.168.43.91/CI-tes/api/mahasiswas/tambah", data)
+            let file = {
+                uri: image.path, 
+                type: 'image/jpg', 
+                name: "imagename.jpg"
+      };
+            const data = new FormData();
+            data.append('nama', nama);
+            data.append('alamat', alamat);
+            data.append('jurusan', jurusan);
+            data.append('image', file);
+
+            console.log("ini form data :", data);
+            console.log("ini form data :", file.uri);
+
+            
+            axios.post("http://192.168.43.91/CI-tes/api/mahasiswas/tambah", data, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            })
                     .then(function (response) {
                       alert(JSON.stringify(response))
                       setNama("");
@@ -38,13 +52,28 @@ const Home = ({navigation}) => {
                     });
         }
 
-    //    const takePicture = async () => {
-    //         if (this.camera) {
-    //           const options = { quality: 0.5, base64: true };
-    //           const data = await this.camera.takePictureAsync(options);
-    //           console.log(data.uri);
-    //         }
-    //       };
+    // var photo = {
+    //     uri: IMAGE_PATH,
+    //     type: 'image/jpeg',
+    //     name: 'photo.jpg',
+    // };
+    
+    // //use formdata
+    // var formData = new FormData(); 
+    // //append created photo{} to formdata
+    // formData.append('image', photo);
+    // //use axios to POST
+    // axios({
+    //     method: 'POST',
+    //     url: api_url +  'customer/upload-avatar',
+    //     data: formData,
+    //     headers: {
+    //         'Authorization': "Bearer  "  +  YOUR_BEARER_TOKEN,
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'multipart/form-data;'    
+    //     }}) .then(function (response) { console.log(response)})
+    //     .catch(function (error) { console.log(error.response)
+    // });
 
           const takePicture = async () => {
             try {
@@ -64,10 +93,10 @@ const Home = ({navigation}) => {
                 compressImageMaxHeight: 300,
                 compressImageMaxWidth: 400,
                 compressImageQuality: 0.5,
-  mediaType: 'photo',
+                mediaType: 'photo',
               }).then(image => {
                 console.log(image);
-                setImage(image.path)
+                setImage(image)
               });
         }
         const chooseFotoFromLibrary = async()=> {
@@ -116,7 +145,7 @@ const Home = ({navigation}) => {
             <Text style={{ fontSize: 14 }}> SNAP </Text>
           </TouchableOpacity>
         </View>
-        <Image source={{uri: image}} style={{height: 150, width: 150, borderColor: 'red'}}></Image>
+                <Image source={{uri: image}} style={{height: 150, width: 150, borderColor: 'red'}}></Image>
                 <TouchableHighlight onPress={takePhotoFromCamera} style={styles.btnSimpan}>
                 <Text style={styles.textBtn} >Take Picture</Text>
                 </TouchableHighlight>
