@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, ScrollView, Alert} from 'react-native';
+import { FlatList, TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import axios from 'axios'
 import { FormTambah } from '../../Component/component';
 
@@ -19,7 +20,8 @@ const ListData = ({navigation}) => {
             itemId: item.id,
             itemNama: item.nama,
             itemAlamat: item.alamat,
-            itemJurusan : item.jurusan
+            itemJurusan : item.jurusan,
+            itemImage : item.image
           });
         // setId(item.id);
         // setNama(item.nama);
@@ -28,11 +30,16 @@ const ListData = ({navigation}) => {
         // setButton("Update");
     }
 
+   
+
     const getData = () => {
         axios.get("http://192.168.43.91/CI-tes/api/mahasiswas/")
         .then(res => {
-            console.log("tes data"+res.data.data);
-            setUsers(res.data.data);
+            const mahasiswa= res.data.data;
+            console.log("tes : "+res.data.data);
+            setUsers(mahasiswa);
+            Alert.alert("tes data"+res.data.data);
+
         })
     }
     const deleteItem = (item) => {
@@ -50,13 +57,16 @@ const ListData = ({navigation}) => {
 
     return (
         <ScrollView>
-             {users.map((mahasiswa, index) => {
+            
+        
+             {users.map((mahasiswa) => {
                 return (
                         <FormTambah 
                         key={mahasiswa.id} 
                         nama={mahasiswa.nama} 
                         alamat={mahasiswa.alamat} 
-                        jurusan={mahasiswa.jurusan} 
+                        jurusan={mahasiswa.jurusan}
+                        imagePicture={`http://192.168.43.91/CI-tes/uploads/${mahasiswa.image}`} 
                         onPress={() => selectItem(mahasiswa)}
                         onDelete={() => Alert.alert('Peringatan', 'Apakah anda ingin menghapus data ini?', 
                         [
@@ -67,14 +77,14 @@ const ListData = ({navigation}) => {
                                 text: "Ya", onPress: () => deleteItem(mahasiswa)
                             },
                         ])}
-
-                        ></FormTambah>     
+                        > </FormTambah>     
                         
                        )
                 })}
-        </ScrollView>
-    )
-}
+                </ScrollView>
+          )
+        }
+  
 
 export default ListData;
 

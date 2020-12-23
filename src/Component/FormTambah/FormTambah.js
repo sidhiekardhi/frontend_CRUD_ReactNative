@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react'
 import { Text, StyleSheet, View, Button, Image, Alert, TouchableOpacity } from 'react-native'
 import CardView from 'react-native-cardview'
 
-const FormTambah = ({nama, alamat, jurusan, onPress, onDelete}) => {
+const FormTambah = ({nama, alamat, jurusan, onPress, onDelete, imagePicture}) => {
     return (
         <CardView
         cardElevation={2}
@@ -10,7 +10,10 @@ const FormTambah = ({nama, alamat, jurusan, onPress, onDelete}) => {
         cornerRadius={5}
         margin={10}>
         <View style={styles.itemContainer}>
-        <Image></Image>
+        {/* <Image source={{uri : image}} style={{width: 100, height:100}}></Image> */}
+        <Image
+          style={{width: 100, height: 100, marginLeft: 20, marginTop:10}}
+          source={{uri: imagePicture}}/>
         <View style={styles.desc}>
             <TouchableOpacity onPress={onPress}>
             <Text style={{fontSize: 20, fontWeight: 'bold'}}>Nama Lengkap : {nama}</Text>

@@ -8,12 +8,13 @@ import qs from 'qs'
 
 
 const Home = ({navigation}) => {
+    
         const [id, setId] =useState("");
         const [nama, setNama] =useState("");
         const [alamat, setAlamat] =useState("");
         const [jurusan, setJurusan] =useState("");
         const [cameraRef, setCameraRef] = useState(null);
-        const [image, setImage] =useState("https://cdn-image.hipwee.com/wp-content/uploads/2020/06/hipwee-chelsea-islan-imbau-pemuda-tak-golput-800-2019-04-08-142033_0-750x422.jpg");
+        const [imagePicture, setImage] =useState("https://cdn-image.hipwee.com/wp-content/uploads/2020/06/hipwee-chelsea-islan-imbau-pemuda-tak-golput-800-2019-04-08-142033_0-750x422.jpg");
 
 
         const GoTo = () => {
@@ -21,7 +22,7 @@ const Home = ({navigation}) => {
         }
         const simpan  =() => {
             let file = {
-                uri: image.path, 
+                uri: imagePicture, 
                 type: 'image/jpg', 
                 name: "imagename.jpg"
       };
@@ -52,39 +53,6 @@ const Home = ({navigation}) => {
                     });
         }
 
-    // var photo = {
-    //     uri: IMAGE_PATH,
-    //     type: 'image/jpeg',
-    //     name: 'photo.jpg',
-    // };
-    
-    // //use formdata
-    // var formData = new FormData(); 
-    // //append created photo{} to formdata
-    // formData.append('image', photo);
-    // //use axios to POST
-    // axios({
-    //     method: 'POST',
-    //     url: api_url +  'customer/upload-avatar',
-    //     data: formData,
-    //     headers: {
-    //         'Authorization': "Bearer  "  +  YOUR_BEARER_TOKEN,
-    //         'Accept': 'application/json',
-    //         'Content-Type': 'multipart/form-data;'    
-    //     }}) .then(function (response) { console.log(response)})
-    //     .catch(function (error) { console.log(error.response)
-    // });
-
-          const takePicture = async () => {
-            try {
-                const options = { quality: 0.5, base64: true };
-                const data = await cameraRef.current.takePictureAsync(options);
-                console.log(data.uri, '<<<<<<<<<<<<<<<<<<<<<');
-            } catch (error) {
-                console.log(error, "ERROR <<<<<<<<<<<<<")
-            }
-        };
-
         const takePhotoFromCamera = async()=> {
             ImagePicker.openCamera({
                 width: 300,
@@ -96,6 +64,7 @@ const Home = ({navigation}) => {
                 mediaType: 'photo',
               }).then(image => {
                 console.log(image);
+                console.log(image.path);
                 setImage(image)
               });
         }
@@ -106,6 +75,7 @@ const Home = ({navigation}) => {
                 cropping: true
               }).then(image => {
                 console.log(image);
+                console.log("image path  :  ", image.path);
                 setImage(image.path)
               });
         }
@@ -119,7 +89,7 @@ const Home = ({navigation}) => {
                 <TextInput placeholder="Masukkan alamat" style={{borderWidth: 1, marginBottom: 5}}value={alamat} onChangeText={(value) => setAlamat(value)}></TextInput>
                 <TextInput placeholder="Masukkan Jurusan" style={{borderWidth: 1, marginBottom: 5}}value={jurusan} onChangeText={(value) => setJurusan(value)}></TextInput>
                 <RNCamera
-           ref={cameraRef}
+          ref={cameraRef}
           style={styles.preview}
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.on}
@@ -137,15 +107,8 @@ const Home = ({navigation}) => {
           }}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             console.log(barcodes);
-          }}
-        />
-
-         <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-          <TouchableOpacity  onPress={takePicture} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
-          </TouchableOpacity>
-        </View>
-                <Image source={{uri: image}} style={{height: 150, width: 150, borderColor: 'red'}}></Image>
+          }} />
+                <Image source={{uri: imagePicture}} style={{height: 150, width: 150, borderColor: 'red'}}></Image>
                 <TouchableHighlight onPress={takePhotoFromCamera} style={styles.btnSimpan}>
                 <Text style={styles.textBtn} >Take Picture</Text>
                 </TouchableHighlight>
